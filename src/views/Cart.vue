@@ -31,10 +31,10 @@
             <label
               class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
             >
-              Full Name
+              Full Name:
             </label>
           </div>
-          <div class="md:w-2/3">
+          <div>
             <input
               v-model="user.name"
               class="bg-gray-200  border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
@@ -94,14 +94,17 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import Header from '@/components/Header.vue'
+import { mapActions, mapGetters } from 'vuex'
+import Header from '../components/Header'
+import Order from '../views/Order'
 export default {
   data() {
     return {
       data: true,
       show: false,
       order: false,
+      hide: false,
+      orderData: null,
       user: {
         name: '',
         address: '',
@@ -111,6 +114,7 @@ export default {
   },
   components: {
     Header,
+    Order,
   },
   computed: {
     ...mapGetters({
@@ -119,6 +123,8 @@ export default {
     }),
   },
   methods: {
+    ...mapActions(['addUser']),
+
     orderconfirm() {
       this.show = true
       this.data = false
@@ -126,26 +132,24 @@ export default {
     Submit() {
       this.order = true
       this.show = false
-      var user = this.user
-      var count = this.totalItems.length
-      console.log(count)
 
-      var item = {
-        ...this.totalItems,
-        ...user,
-        ...count,
+      var user = {
+        ...this.user,
+        order: {
+          items: this.totalItems.length,
+          total: this.Price,
+          item: [
+            {
+              item: this.totalItems,
+            },
+          ],
+        },
       }
       var counter = localStorage.getItem('counter')
       counter++
-
-      localStorage.setItem('orderdata:' + counter, JSON.stringify(item))
-
+      localStorage.setItem('orderdata:' + counter, JSON.stringify(user))
+      this.orderData = JSON.parse(localStorage.getItem('orderdata:' + counter))
       localStorage.setItem('counter', counter)
-
-      console.log(val)
-      this.user.name = ''
-      this.user.address = ''
-      this.user.phone = ''
     },
   },
 }

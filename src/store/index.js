@@ -90,6 +90,9 @@ export default new Vuex.Store({
       })
       return sum
     },
+    getUser: (state) => {
+      return state.user
+    },
   },
   mutations: {
     add(state, ItemId) {
@@ -105,12 +108,18 @@ export default new Vuex.Store({
       }
       state.total.push(add)
     },
+    add_user(state, data) {
+      state.user = data
+    },
   },
   actions: {
     add({ commit }, ItemId) {
       setTimeout(() => {
         commit('add', ItemId)
       })
+    },
+    addUser({ commit }, data) {
+      commit('add_user', data)
     },
   },
   modules: {},

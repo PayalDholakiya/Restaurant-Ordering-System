@@ -7,9 +7,8 @@
       <ul class="list-none  flex flex-row gap-10 justify-center cursor-pointer">
         <li
           class="rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
-          @click="home"
         >
-          Home
+          <router-link to="/"> Home</router-link>
         </li>
         <li
           class="rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent transition delay-300 duration-300 ease-in-out"
@@ -19,12 +18,15 @@
       </ul>
     </div>
     <div class="flex">
-      <!-- <img class="h-10 w-10 mr-10" src="../assets/cart.jpg" /> -->
       <button
         class="font-semibold hover:bg-white hover:shadow-lg hover:border-transparent rounded-lg"
-        @click="cart"
       >
-        Cart
+        <router-link to="/cart"> Cart</router-link>
+      </button>
+      <button
+        class="ml-5 font-semibold hover:bg-white hover:shadow-lg hover:border-transparent rounded-lg"
+      >
+        <router-link to="/order"> orders</router-link>
       </button>
     </div>
   </div>
@@ -33,16 +35,5 @@
 <script>
 export default {
   name: 'Header',
-  methods: {
-    cart() {
-      this.$router.push('/cart')
-    },
-    home() {
-      this.$router.push('/')
-    },
-  },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
