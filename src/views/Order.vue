@@ -1,7 +1,10 @@
 <template>
   <div>
     <Header />
-    <div class="mx-10 mt-5 text-left" v-for="(data, index) in orderData">
+    <div
+      class="mx-10 mt-5 text-left bg-white px-5"
+      v-for="(data, index) in orderData"
+    >
       <div class="flex justify-between">
         <h1 class="font-bold ">Order Details : {{ index + 1 }}</h1>
         <svg
