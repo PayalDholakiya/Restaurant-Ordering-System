@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="bg-gradient-to-r from-white via-pink-50 to-pink-100 min-h-screen"
+    class="min-h-screen bg-gradient-to-r from-pink-100 via-pink-50 to-pink-100"
   >
     <router-view />
   </div>

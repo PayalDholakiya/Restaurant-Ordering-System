@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     total: [],
+    price: [],
     items: [
       {
         id: 1,
@@ -78,13 +79,14 @@ export default new Vuex.Store({
       return state.items
     },
     totalItems: (state) => {
+      console.log(state.total, 'total')
       return state.total
     },
     totalPrice: (state) => {
       var sum = 0
-      state.items.filter((e) => {
-        if (e.done) {
-          sum += e.price
+      state.total.filter((e) => {
+        if (e.Price) {
+          sum += e.Price
           console.log(sum)
         }
       })

@@ -1,30 +1,25 @@
 <template>
   <div
-    class="font-semibold text-3xl shadow-xl font-mono flex justify-around bg-pink-300 h-20 items-center text-2xl  font-sans"
+    class="flex items-center justify-around h-20 font-sans font-mono text-2xl text-3xl font-semibold bg-pink-300 shadow-xl"
   >
     <div class="flex justify-around ">
-      <img class="h-10 w-10 mr-10" src="../assets/logo.jpg" />
-      <ul class="list-none  flex flex-row gap-10 justify-center cursor-pointer">
+      <img class="w-10 h-10 mr-10" src="../assets/logo.jpg" />
+      <ul class="flex flex-row justify-center gap-10 list-none cursor-pointer">
         <li
           class="rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
         >
           <router-link to="/"> Home</router-link>
         </li>
-        <li
-          class="rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent transition delay-300 duration-300 ease-in-out"
-        >
-          Menu
-        </li>
       </ul>
     </div>
     <div class="flex">
       <button
-        class="font-semibold hover:bg-white hover:shadow-lg hover:border-transparent rounded-lg"
+        class="font-semibold rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
       >
         <router-link to="/cart"> Cart</router-link>
       </button>
       <button
-        class="ml-5 font-semibold hover:bg-white hover:shadow-lg hover:border-transparent rounded-lg"
+        class="ml-5 font-semibold rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
       >
         <router-link to="/order"> orders</router-link>
       </button>
