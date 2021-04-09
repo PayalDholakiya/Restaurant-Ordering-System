@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div
-      class="mx-10 mt-5 text-left bg-white px-5"
+      class="px-5 mx-10 mt-5 text-left bg-white"
       v-for="(data, index) in orderData"
     >
       <div class="flex justify-between">
@@ -54,7 +54,17 @@ export default {
       return orderData
     },
     deleteData() {
-      this.orderData.splice(this.orderData.indexOf(this.data), 1)
+      this.$swal({
+        text: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, Delete it!',
+      }).then((data) => {
+        if (data.isConfirmed) {
+          this.orderData.splice(this.orderData.indexOf(this.data), 1)
+          this.$toastr.s('Orderdata deleted.')
+        }
+      })
     },
   },
   created() {

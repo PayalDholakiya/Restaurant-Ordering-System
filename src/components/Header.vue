@@ -13,13 +13,18 @@
       </ul>
     </div>
     <div class="flex">
+      <div class="relative">
+        <button
+          class="font-semibold rounded-lg hover:p-5  hover:bg-white hover:shadow-lg hover:border-transparent"
+        >
+          <router-link to="/cart"> Cart</router-link>
+        </button>
+        <span class="absolute h-6 w-6 rounded-full  text-base bg-white">{{
+          totalItems.length
+        }}</span>
+      </div>
       <button
-        class="font-semibold rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
-      >
-        <router-link to="/cart"> Cart</router-link>
-      </button>
-      <button
-        class="ml-5 font-semibold rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
+        class="ml-8 font-semibold rounded-lg hover:bg-white hover:shadow-lg hover:border-transparent"
       >
         <router-link to="/order"> orders</router-link>
       </button>
@@ -28,7 +33,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Header',
+  computed: {
+    ...mapGetters(['totalItems']),
+  },
 }
 </script>

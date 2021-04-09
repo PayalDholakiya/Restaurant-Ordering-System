@@ -108,6 +108,8 @@ export default new Vuex.Store({
         Image: x.image,
       }
       state.total.push(add)
+      this.$toastr.s('Item added in cart.')
+      this.$toastr.defaultTimeout = 2000
     },
     add_user(state, data) {
       state.user = data

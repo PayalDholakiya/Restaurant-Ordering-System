@@ -54,7 +54,16 @@
               v-model="user.name"
               class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
+              :class="{ 'is-invalid': submitted && $v.user.name.$error }"
             />
+            <div
+              v-if="submitted && $v.user.name.$error"
+              class="invalid-feedback"
+            >
+              <span class="text-red-500" v-if="!$v.user.name.required">
+                Name is required</span
+              >
+            </div>
           </div>
         </div>
         <div class="mb-6 md:flex md:items-center">
@@ -68,9 +77,18 @@
           <div>
             <input
               v-model="user.address"
+              :class="{ 'is-invalid': submitted && $v.user.address.$error }"
               class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
             />
+            <div
+              v-if="submitted && $v.user.address.$error"
+              class="invalid-feedback"
+            >
+              <span class="text-red-500" v-if="!$v.user.address.required">
+                Address is required</span
+              >
+            </div>
           </div>
         </div>
         <div class="mb-6 md:flex md:items-center">
@@ -86,7 +104,19 @@
               v-model="user.phone"
               class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
+              :class="{ 'is-invalid': submitted && $v.user.phone.$error }"
             />
+            <div
+              v-if="submitted && $v.user.phone.$error"
+              class="invalid-feedback"
+            >
+              <span class="text-red-500" v-if="!$v.user.phone.required">
+                Phone number is required</span
+              >
+              <span class="text-red-500" v-if="!$v.user.phone.integer"
+                >Only accept integer value</span
+              >
+            </div>
           </div>
         </div>
         <div class="md:flex md:items-center">
@@ -103,15 +133,13 @@
         </div>
       </form>
     </div>
-    <div v-if="order" class="my-40 font-mono text-3xl">
-      <p>Your order placed successfully !!.</p>
-    </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Header from '../components/Header'
 import Order from '../views/Order'
+import { required, minLength, integer } from 'vuelidate/lib/validators'
 export default {
   data() {
     return {
@@ -125,8 +153,23 @@ export default {
         address: '',
         phone: '',
       },
+      submitted: false,
     }
   },
+  validations() {
+    return {
+      user: {
+        name: { required },
+        address: { required },
+        phone: {
+          required,
+          integer,
+          minLength: minLength(10),
+        },
+      },
+    }
+  },
+
   components: {
     Header,
     Order,
@@ -145,6 +188,11 @@ export default {
       this.data = false
     },
     Submit() {
+      this.submitted = true
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        return
+      }
       this.order = true
       this.show = false
 
@@ -165,9 +213,29 @@ export default {
       localStorage.setItem('orderdata:' + counter, JSON.stringify(user))
       this.orderData = JSON.parse(localStorage.getItem('orderdata:' + counter))
       localStorage.setItem('counter', counter)
+      this.$toastr.Add({
+        msg: 'Your Order Placed successfully.',
+        timeout: 2000,
+        classNames: ['animated', 'zoomInUp', 'injectedStyle'],
+        style: {
+          backgroundColor: 'Green',
+        },
+      })
+      this.$router.push('/')
     },
     remove() {
-      this.totalItems.splice(this.totalItems.indexOf(this.order), 1)
+      this.$swal({
+        text: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, Delete it!',
+      }).then((order) => {
+        if (order.isConfirmed) {
+          this.totalItems.splice(this.totalItems.indexOf(this.order), 1)
+          this.$toastr.s('Item deleted successfully.')
+          this.$toastr.defaultTimeout = 400
+        }
+      })
     },
   },
 }
