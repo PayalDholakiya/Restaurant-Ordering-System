@@ -78,7 +78,6 @@ export default new Vuex.Store({
       return state.items
     },
     totalItems: (state) => {
-      console.log(state.total, 'total')
       return state.total
     },
     totalPrice: (state) => {
@@ -108,7 +107,7 @@ export default new Vuex.Store({
         Image: x.image,
       }
       state.total.push(add)
-      this.$toastr.s('Item added in cart.')
+      this.$toastr('Item added in cart.')
       this.$toastr.defaultTimeout = 2000
     },
     add_user(state, data) {

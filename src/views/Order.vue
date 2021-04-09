@@ -50,8 +50,6 @@ export default {
       for (let i = 1; i <= counter; i++) {
         this.orderData.push(JSON.parse(localStorage.getItem('orderdata:' + i)))
       }
-      console.log(orderData)
-      return orderData
     },
     deleteData() {
       this.$swal({
@@ -62,7 +60,7 @@ export default {
       }).then((data) => {
         if (data.isConfirmed) {
           this.orderData.splice(this.orderData.indexOf(this.data), 1)
-          this.$toastr.s('Orderdata deleted.')
+          this.$toastr('Orderdata deleted.')
         }
       })
     },

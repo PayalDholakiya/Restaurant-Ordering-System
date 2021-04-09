@@ -139,7 +139,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import Header from '../components/Header'
 import Order from '../views/Order'
-import { required, minLength, integer } from 'vuelidate/lib/validators'
+import { required, integer } from 'vuelidate/lib/validators'
 export default {
   data() {
     return {
@@ -164,7 +164,6 @@ export default {
         phone: {
           required,
           integer,
-          minLength: minLength(10),
         },
       },
     }
@@ -232,7 +231,7 @@ export default {
       }).then((order) => {
         if (order.isConfirmed) {
           this.totalItems.splice(this.totalItems.indexOf(this.order), 1)
-          this.$toastr.s('Item deleted successfully.')
+          this.$toastr('Item deleted successfully.')
           this.$toastr.defaultTimeout = 400
         }
       })
