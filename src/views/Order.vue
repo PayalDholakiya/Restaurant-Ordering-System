@@ -8,7 +8,7 @@
       <div class="flex justify-between">
         <h1 class="font-bold ">Order Details : {{ index + 1 }}</h1>
         <svg
-          @click="deleteData(data)"
+          @click="deleteData(index)"
           xmlns="http://www.w3.org/2000/svg"
           class="w-6 h-6 mt-1 mr-2 cursor-pointer "
           fill="none"
@@ -51,7 +51,7 @@ export default {
         this.orderData.push(JSON.parse(localStorage.getItem('orderdata:' + i)))
       }
     },
-    deleteData() {
+    deleteData(index) {
       this.$swal({
         text: 'Are you sure?',
         showCancelButton: true,
@@ -59,7 +59,7 @@ export default {
         confirmButtonText: 'Yes, Delete it!',
       }).then((data) => {
         if (data.isConfirmed) {
-          this.orderData.splice(this.orderData.indexOf(this.data), 1)
+          this.orderData.splice(index, 1)
           this.$toastr('Orderdata deleted.')
         }
       })

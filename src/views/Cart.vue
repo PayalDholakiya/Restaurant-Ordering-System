@@ -4,7 +4,7 @@
     <div v-if="data" class="m-10 font-mono text-2xl">
       <div
         class="items-center justify-between gap-5 m-5 bg-white shadow-xl lg:flex hover:shadow-2xl"
-        v-for="order in totalItems"
+        v-for="(order, index) in totalItems"
       >
         <img class="w-20 h-16 m-2 " :src="order.Image" />
         <div>
@@ -13,7 +13,7 @@
         <div class="flex justify-between">
           <p class="pr-10">${{ order.Price }}</p>
           <svg
-            @click="remove(order)"
+            @click="remove(index)"
             xmlns="http://www.w3.org/2000/svg"
             class="w-6 h-6 mt-1 mr-2 cursor-pointer "
             fill="none"
@@ -222,7 +222,7 @@ export default {
       })
       this.$router.push('/')
     },
-    remove() {
+    remove(index) {
       this.$swal({
         text: 'Are you sure?',
         showCancelButton: true,
@@ -230,7 +230,7 @@ export default {
         confirmButtonText: 'Yes, Delete it!',
       }).then((order) => {
         if (order.isConfirmed) {
-          this.totalItems.splice(this.totalItems.indexOf(this.order), 1)
+          this.totalItems.splice(index, 1)
           this.$toastr('Item deleted successfully.')
           this.$toastr.defaultTimeout = 400
         }
