@@ -110,7 +110,7 @@ export default new Vuex.Store({
       this.$toastr('Item added in cart.')
       this.$toastr.defaultTimeout = 2000
     },
-    add_user(state, data) {
+    addUser(state, data) {
       state.user = data
     },
   },
@@ -121,7 +121,7 @@ export default new Vuex.Store({
       })
     },
     addUser({ commit }, data) {
-      commit('add_user', data)
+      commit('addUser', data)
     },
   },
   modules: {},

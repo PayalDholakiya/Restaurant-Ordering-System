@@ -40,7 +40,7 @@
       </div>
     </div>
     <div v-if="show" class="m-20 font-mono text-xl">
-      <form class="inline-block">
+      <form class="inline-block border-2 p-11">
         <div class="mb-6 md:flex md:items-center">
           <div class="md:w-1/3">
             <label
@@ -52,7 +52,7 @@
           <div>
             <input
               v-model="user.name"
-              class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
+              class="w-full px-4 py-2 leading-tight text-gray-700 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
               :class="{ 'is-invalid': submitted && $v.user.name.$error }"
             />
@@ -78,7 +78,7 @@
             <input
               v-model="user.address"
               :class="{ 'is-invalid': submitted && $v.user.address.$error }"
-              class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
+              class="w-full px-4 py-2 leading-tight text-gray-700 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
             />
             <div
@@ -102,7 +102,7 @@
           <div>
             <input
               v-model="user.phone"
-              class="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
+              class="w-full px-4 py-2 leading-tight text-gray-700 border-2 border-gray-200 rounded focus:outline-none focus:bg-white focus:border-purple-500"
               type="text"
               :class="{ 'is-invalid': submitted && $v.user.phone.$error }"
             />
@@ -136,6 +136,7 @@
   </div>
 </template>
 <script>
+import firebase from 'firebase'
 import { mapActions, mapGetters } from 'vuex'
 import Header from '../components/Header'
 import Order from '../views/Order'
@@ -183,8 +184,14 @@ export default {
     ...mapActions(['addUser']),
 
     orderconfirm() {
-      this.show = true
-      this.data = false
+      let currentUser = firebase.auth().currentUser
+      if (currentUser == null) {
+        this.$router.push('/sign-in')
+      } else {
+        console.log(currentUser)
+        this.show = true
+        this.data = false
+      }
     },
     Submit() {
       this.submitted = true
