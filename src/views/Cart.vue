@@ -214,11 +214,14 @@ export default {
           ],
         },
       }
-      var counter = localStorage.getItem('counter')
-      counter++
-      localStorage.setItem('orderdata:' + counter, JSON.stringify(user))
-      this.orderData = JSON.parse(localStorage.getItem('orderdata:' + counter))
-      localStorage.setItem('counter', counter)
+      firebase
+        .database()
+        .ref('users')
+        .push(user)
+        .then((data) => {
+          console.log(user)
+        })
+      this.$router.push('/')
       this.$toastr.Add({
         msg: 'Your Order Placed successfully.',
         timeout: 2000,
@@ -227,7 +230,15 @@ export default {
           backgroundColor: 'Green',
         },
       })
-      this.$router.push('/')
+      // var counter = localStorage.getItem('counter')
+      // counter++
+      // localStorage.setItem('orderdata:' + counter, JSON.stringify(user))
+      // this.orderData = JSON.parse(localStorage.getItem('orderdata:' + counter))
+      // localStorage.setItem('counter', counter)
+      // const orders = []
+      // const obj = data.val()
+      // orders.push(this.user)
+      // console.log(orders)
     },
     remove(index) {
       this.$swal({
