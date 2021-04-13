@@ -6,7 +6,7 @@
         class="items-center justify-between gap-5 m-5 bg-white shadow-xl lg:flex hover:shadow-2xl"
         v-for="(order, index) in totalItems"
       >
-        <img class="w-20 h-16 m-2 " :src="order.Image" />
+        <img class="w-20 h-16 m-2 " src="../assets/7.jpg" />
         <div>
           <p>{{ order.name }}</p>
         </div>
@@ -214,6 +214,7 @@ export default {
           ],
         },
       }
+
       firebase
         .database()
         .ref('users')
@@ -249,6 +250,7 @@ export default {
       }).then((order) => {
         if (order.isConfirmed) {
           this.totalItems.splice(index, 1)
+
           this.$toastr('Item deleted successfully.')
           this.$toastr.defaultTimeout = 400
         }

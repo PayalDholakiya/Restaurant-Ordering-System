@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div
-      class="px-5 mx-10 mt-5 text-left bg-white"
+      class="p-5 mx-10 mt-5 text-left bg-white"
       v-for="(data, index) in orderData"
     >
       <div class="flex justify-between">
@@ -26,8 +26,7 @@
       <p>Name : {{ orderData[index].name }}</p>
       <p>Address : {{ orderData[index].address }}</p>
       <p>Items : {{ orderData[index].items }}</p>
-      <p>Total amount : ${{ orderData[index].total }}</p>
-      <hr />
+      <p>Total amount : ${{ orderData[index].amount }}</p>
     </div>
   </div>
 </template>

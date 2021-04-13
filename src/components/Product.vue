@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-col text-2xl bg-white shadow-2xl hover:shadow-xl">
       <div>
-        <img class="w-full rounded-lg lg:h-80" :src="detail.image" />
+        <img class="w-full rounded-lg lg:h-80" src="../assets/7.jpg" />
       </div>
       <div>
         <p>{{ detail.name }}</p>
@@ -44,6 +44,7 @@ export default {
   methods: {
     add(item) {
       this.$store.dispatch('add', item.id)
+
       this.$toastr.s('Item added in cart.')
       this.$toastr.defaultTimeout = 400
     },

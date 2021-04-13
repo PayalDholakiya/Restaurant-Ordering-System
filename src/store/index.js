@@ -1,81 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import firebase from 'firebase'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     total: [],
-    items: [
-      {
-        id: 1,
-        name: 'vanilla-slice',
-        image: require('../assets/7.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 2,
-        name: 'choco cup-cake',
-        image: require('../assets/3.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 3,
-        name: 'blueberry',
-        image: require('../assets/10.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 4,
-        name: 'lemon Raspberry',
-        image: require('../assets/9.jpg'),
-        price: 500,
-        done: false,
-      },
-      {
-        id: 5,
-        name: 'multisplice',
-        image: require('../assets/5.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 6,
-        name: 'dark choco',
-        image: require('../assets/3.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 7,
-        name: 'Caramel Apple',
-        image: require('../assets/7.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 8,
-        name: 'Coconut Snowball',
-        image: require('../assets/8.jpg'),
-        price: 200,
-        done: false,
-      },
-      {
-        id: 9,
-        name: 'dark choco',
-        image: require('../assets/9.jpg'),
-        price: 200,
-        done: false,
-      },
-    ],
+    orderData: [],
+
     user: null,
   },
   getters: {
-    items: (state) => {
-      return state.items
+    getItems: (state) => {
+      console.log(state.orderData)
+      return state.orderData
     },
     totalItems: (state) => {
       return state.total
@@ -96,7 +34,7 @@ export default new Vuex.Store({
   },
   mutations: {
     add(state, ItemId) {
-      const x = state.items.find((item) => {
+      const x = state.orderData.find((item) => {
         return item.id == ItemId
       })
       x.done = true
@@ -104,14 +42,17 @@ export default new Vuex.Store({
         id: ItemId,
         name: x.name,
         Price: x.price,
-        Image: x.image,
       }
       state.total.push(add)
       this.$toastr('Item added in cart.')
       this.$toastr.defaultTimeout = 2000
     },
     addUser(state, data) {
+      console.log(state.user)
       state.user = data
+    },
+    setItems(state, data) {
+      state.orderData = data
     },
   },
   actions: {
@@ -122,6 +63,27 @@ export default new Vuex.Store({
     },
     addUser({ commit }, data) {
       commit('addUser', data)
+    },
+    setItems({ commit }) {
+      var orderData = []
+      firebase
+        .database()
+        .ref('items')
+        .once('value')
+        .then((data) => {
+          const obj = data.val()
+          for (let key in obj) {
+            orderData.push({
+              id: 1,
+              name: obj[key].name,
+              image: obj[key].image,
+              price: obj[key].price,
+              done: obj[key].done,
+            })
+          }
+          commit('setItems', orderData)
+          console.log(orderData, 'data')
+        })
     },
   },
   modules: {},
