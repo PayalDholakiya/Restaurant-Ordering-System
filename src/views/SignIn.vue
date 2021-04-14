@@ -49,6 +49,9 @@
               <label for="remember_me" class="block ml-2 text-sm text-gray-900">
                 Remember me
               </label>
+              <label for="remember_me" class="block ml-2 text-sm text-gray-900">
+                forgot password??
+              </label>
             </div>
             <div class="text-sm"></div>
           </div>

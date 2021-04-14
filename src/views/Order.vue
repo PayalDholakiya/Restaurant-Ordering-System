@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div
-      class="px-5 mx-10 mt-5 text-left bg-white"
+      class="p-5 mx-10 mt-5 text-left bg-white"
       v-for="(data, index) in orderData"
     >
       <div class="flex justify-between">
@@ -25,14 +25,14 @@
       </div>
       <p>Name : {{ orderData[index].name }}</p>
       <p>Address : {{ orderData[index].address }}</p>
-      <p>Items : {{ orderData[index].order.items }}</p>
-      <p>Total amount : ${{ orderData[index].order.total }}</p>
-      <hr />
+      <p>Items : {{ orderData[index].items }}</p>
+      <p>Total amount : ${{ orderData[index].amount }}</p>
     </div>
   </div>
 </template>
 <script>
 import Header from '../components/Header'
+import firebase from 'firebase'
 export default {
   name: 'Order',
   components: {
@@ -46,10 +46,29 @@ export default {
   },
   methods: {
     add() {
-      var counter = localStorage.getItem('counter')
-      for (let i = 1; i <= counter; i++) {
-        this.orderData.push(JSON.parse(localStorage.getItem('orderdata:' + i)))
-      }
+      firebase
+        .database()
+        .ref('users')
+        .once('value')
+        .then((data) => {
+          const obj = data.val()
+          for (let key in obj) {
+            this.orderData.push({
+              id: key,
+              name: obj[key].name,
+              address: obj[key].address,
+              phone: obj[key].phone,
+              items: obj[key].order.items,
+              amount: obj[key].order.total,
+            })
+          }
+          console.log(this.orderData, 'data')
+        })
+
+      // var counter = localStorage.getItem('counter')
+      // for (let i = 1; i <= counter; i++) {
+      //   this.orderData.push(JSON.parse(localStorage.getItem('orderdata:' + i)))
+      // }
     },
     deleteData(index) {
       this.$swal({
